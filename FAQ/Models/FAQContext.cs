@@ -8,22 +8,15 @@ using System.Web;
 
 namespace FAQ.Models
 {
-    public class SS
-    {
-        [Key]
-        public int ID { get; set; }
-        public String Sporsmal { get; set; }
-        public String Svar { get; set; }
-    }
-
-    public class FAQContext : DbContext
+     public class FAQContext : DbContext
     {
         public FAQContext() : base("name=FAQ") {
             Database.SetInitializer(new DbInitializer());
-            Database.CreateIfNotExists();
+            Database.Initialize(true);
         }
 
-        public DbSet<SS> SSer { get; set; }
+        public DbSet<SSModel> SSer { get; set; }
+        public DbSet<ISModel> ISer { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -31,27 +24,36 @@ namespace FAQ.Models
         }
     }
 
-    public class DbInitializer : DropCreateDatabaseAlways<FAQContext> {
+    public class DbInitializer : CreateDatabaseIfNotExists<FAQContext> {
 
         protected override void Seed(FAQContext context)
         {
-            var sporsmal = new SS()
+            var sporsmal = new SSModel()
             {
-                ID = 1,
-                Sporsmal = "Q1",
-                Svar = "A1"
+                id = 1,
+                sporsmal = "Q1",
+                svar = "A1"
                 
             };
 
-            var sporsmal1 = new SS()
+            var sporsmal1 = new SSModel()
             {
-                ID = 1,
-                Sporsmal = "Q2",
-                Svar = "A2"
+                id = 1,
+                sporsmal = "Q2",
+                svar = "A2"
+
+            };
+
+            var sporsmal2 = new SSModel()
+            {
+                id = 1,
+                sporsmal = "Q3",
+                svar = "A3"
 
             };
             context.SSer.Add(sporsmal);
             context.SSer.Add(sporsmal1);
+            context.SSer.Add(sporsmal2);
             base.Seed(context);
         }
 

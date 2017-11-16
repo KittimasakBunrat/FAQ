@@ -1,5 +1,5 @@
 ﻿export class FAQ {
-    ID: number;
-    Sporsmal: string;
-    Svar: string;    
+    id: number;
+    sporsmal: string;
+    svar: string;    
 }

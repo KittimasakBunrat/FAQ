@@ -132,6 +132,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\FAQContext.cs" />
+    <Compile Include="Models\ISModel.cs" />
     <Compile Include="Models\SSModel.cs" />
     <Compile Include="ssDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

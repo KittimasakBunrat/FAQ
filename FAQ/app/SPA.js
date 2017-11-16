@@ -17,9 +17,9 @@ var SPA = (function () {
         this._http = _http;
         this.fb = fb;
         this.skjema = fb.group({
-            ID: [""],
-            Sporsmal: [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])],
-            Svar: [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])],
+            id: [""],
+            sporsmal: [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])],
+            svar: [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])],
         });
     }
     SPA.prototype.ngOnInit = function () {
@@ -51,23 +51,6 @@ var SPA = (function () {
     SPA.prototype.tilbakeTilListe = function () {
         this.visKundeListe = true;
         this.visSkjema = false;
-    };
-    // her blir kunden hentet og vist i skjema
-    SPA.prototype.endreKunde = function (id) {
-        var _this = this;
-        this._http.get("api/web/" + id)
-            .map(function (returData) {
-            var JsonData = returData.json();
-            return JsonData;
-        })
-            .subscribe(function (JsonData) {
-            _this.skjema.patchValue({ id: JsonData.ID });
-            _this.skjema.patchValue({ sporsmal: JsonData.sporsmal });
-            _this.skjema.patchValue({ svar: JsonData.svar });
-        }, function (error) { return alert(error); }, function () { return console.log("ferdig get-api/kunde"); });
-        this.skjemaStatus = "Endre";
-        this.visSkjema = true;
-        this.visKundeListe = false;
     };
     return SPA;
 }());

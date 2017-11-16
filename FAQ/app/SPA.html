@@ -1,6 +1,6 @@
 ﻿<div>
     <div class="col-md-6 col-md-offset-1" *ngIf="visKundeListe">
-        <div *ngIf="laster">Laster kunder.....</div>
+        <div *ngIf="laster">Laster spørsmål og svar.....</div>
         <table class="table table-bordered table-condensed">
             <thead>
                 <tr>
@@ -8,12 +8,10 @@
                     <th>Svar</th>
                 </tr>
             </thead>
-            <tbody *ngFor="let kunde of alleKunder">
+            <tbody *ngFor="let faq of alleKunder">
                 <tr>
-                    <td>{{FAQ.Sporsmal}}</td>
-                    <td>{{FAQ.Svar}}</td>
-                    <td><button class="btn btn-danger" (click)="sletteKunde(kunde.id)">Slett</button></td>
-                    <td><button class="btn btn-success" (click) ="endreKunde(kunde.id)">Endre</button></td>
+                    <td>{{faq.sporsmal}}</td>
+                    <td>{{faq.svar}}</td>
                 </tr>
             </tbody>
         </table>

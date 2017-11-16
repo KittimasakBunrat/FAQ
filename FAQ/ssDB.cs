@@ -12,13 +12,28 @@ namespace FAQ.Models
         FAQContext db = new FAQContext();
 
         public List<SSModel> hentAlle() {
-            List<SSModel> listAlle = db.SSer.Select(s => new SSModel()
+            return db.SSer.ToList(); 
+        }
+
+        public List<ISModel> hentAlleIS() {
+            return db.ISer.ToList();
+        }
+
+        public bool lagreIS(ISModel innsendt) {
+            var nyIS = new ISModel
             {
-                id = s.ID,
-                sporsmal = s.Sporsmal,
-                svar = s.Svar              
-                 }).ToList();
-            return listAlle;
+                email = innsendt.email,
+                sendtsporsmal = innsendt.sendtsporsmal
+            };
+
+            try
+            {
+                db.ISer.Add(nyIS);
+            }
+            catch(Exception feil) {
+                return false;
+            }
+            return true;
         }
     }
 }

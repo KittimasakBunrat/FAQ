@@ -20,9 +20,9 @@ export class SPA {
 
     constructor(private _http: Http, private fb: FormBuilder) {
         this.skjema = fb.group({
-            ID: [""],
-            Sporsmal: [null, Validators.compose([Validators.required, Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])],
-            Svar: [null, Validators.compose([Validators.required, Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])],
+            id: [""],
+            sporsmal: [null, Validators.compose([Validators.required, Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])],
+            svar: [null, Validators.compose([Validators.required, Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])],
       });
     }
 
@@ -59,25 +59,5 @@ export class SPA {
         this.visSkjema = false;
     }
 
-    // her blir kunden hentet og vist i skjema
-    endreKunde(id: number) {
-        this._http.get("api/web/" + id)
-            .map(returData => {
-                let JsonData = returData.json();
-                return JsonData;
-            })
-            .subscribe(
-            JsonData => { // legg de hentede data inn i feltene til endreSkjema. Kan bruke setValue også her da hele skjemaet skal oppdateres. 
-                this.skjema.patchValue({ id: JsonData.ID });
-                this.skjema.patchValue({ sporsmal: JsonData.sporsmal });
-                this.skjema.patchValue({ svar: JsonData.svar });
-            },
-            error => alert(error),
-            () => console.log("ferdig get-api/kunde")
-            );
-        this.skjemaStatus = "Endre";
-        this.visSkjema = true;
-        this.visKundeListe = false;
-    }
 
 }

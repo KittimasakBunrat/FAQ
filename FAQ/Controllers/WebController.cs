@@ -25,27 +25,5 @@ namespace FAQ.Controllers
             };
         }
 
-        [HttpPost]
-        public HttpResponseMessage Post([FromBody]ISModel innIS)
-        {
-
-            if (ModelState.IsValid)
-            {
-                bool OK = ssDB.lagreIS(innIS);
-                if (OK)
-                {
-                    return new HttpResponseMessage()
-                    {
-                        StatusCode = HttpStatusCode.OK
-                    };
-
-                }
-            }
-            return new HttpResponseMessage()
-            {
-                StatusCode = HttpStatusCode.BadRequest,
-                Content = new StringContent("Kunne ikke sette inn spørsmålet.")
-            };
-        }
     }
 }

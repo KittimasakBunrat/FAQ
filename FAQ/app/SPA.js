@@ -20,7 +20,7 @@ var SPA = (function () {
         this.fb = fb;
         this.skjema = fb.group({
             id: [""],
-            email: [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])],
+            email: [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)])],
             sendtsporsmal: [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])],
         });
     }
@@ -63,7 +63,7 @@ var SPA = (function () {
             if (JsonData) {
                 for (var _i = 0, JsonData_2 = JsonData; _i < JsonData_2.length; _i++) {
                     var innsendtObjekt = JsonData_2[_i];
-                    _this.alleKunder.push(innsendtObjekt);
+                    _this.alleInnsendt.push(innsendtObjekt);
                 }
             }
             ;
@@ -84,6 +84,12 @@ var SPA = (function () {
     SPA.prototype.tilbakeTilListe = function () {
         this.visKundeListe = true;
         this.visSkjema = false;
+        this.visInnsendtListe = false;
+    };
+    SPA.prototype.visInnsendt = function () {
+        this.hentAlleInnsendt();
+        this.visKundeListe = false;
+        this.visInnsendtListe = true;
     };
     SPA.prototype.vedSubmit = function () {
         if (this.skjemaStatus == "Registrere") {

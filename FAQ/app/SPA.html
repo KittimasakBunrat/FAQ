@@ -18,7 +18,26 @@
             </tbody>
         </table>
         <button class='btn btn-primary' (click)='registrerInnsendt()'>Register sporsmal</button>
+        <button class='btn btn-primary' (click)='visInnsendt()'>Innsendt sporsmal</button>
     </div>
+</div>
+
+<div class="col-md-6 col-md-offset-1" *ngIf="visInnsendtListe">
+    <table class="table table-bordered table-condensed">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Sporsmal</th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let is of alleInnsendt">
+            <tr>
+                <td>{{is.email}}</td>
+                <td>{{is.sendtsporsmal}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-default" (click)="tilbakeTilListe()">Tilbake</button>
 </div>
 
 <div class="col-sm-4 col-sm-offset-2" *ngIf="visSkjema">

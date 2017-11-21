@@ -6,7 +6,6 @@ import { FAQ } from "./FAQ";
 import { INNSENDT } from "./innsendt";
 import { Headers } from "@angular/http";
 
-
 @Component({
     selector: "min-app",
     templateUrl: "./app/SPA.html"
@@ -24,7 +23,7 @@ export class SPA {
     constructor(private _http: Http, private fb: FormBuilder) {
         this.skjema = fb.group({
             id: [""],
-            email: [null, Validators.compose([Validators.required, Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])],
+            email: [null, Validators.compose([Validators.required, Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)])],
             sendtsporsmal: [null, Validators.compose([Validators.required, Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])],
         });
     }
@@ -70,7 +69,7 @@ export class SPA {
                 this.alleInnsendt = [];
                 if (JsonData) {
                     for (let innsendtObjekt of JsonData) {
-                        this.alleKunder.push(innsendtObjekt);
+                        this.alleInnsendt.push(innsendtObjekt);
                     }
                 };
             },
@@ -95,6 +94,13 @@ export class SPA {
     tilbakeTilListe() {
         this.visKundeListe = true;
         this.visSkjema = false;
+        this.visInnsendtListe = false;
+    }
+
+    visInnsendt() {
+        this.hentAlleInnsendt();
+        this.visKundeListe = false;
+        this.visInnsendtListe = true;
     }
 
     vedSubmit() {

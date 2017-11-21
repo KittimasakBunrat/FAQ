@@ -20,7 +20,7 @@ namespace FAQ.Models
         }
 
         public bool lagreIS(ISModel innsendt) {
-            var nyIS = new ISModel
+            var nyInnsendt = new ISModel
             {
                 email = innsendt.email,
                 sendtsporsmal = innsendt.sendtsporsmal
@@ -28,7 +28,9 @@ namespace FAQ.Models
 
             try
             {
-                db.ISer.Add(nyIS);
+                db.ISer.Add(nyInnsendt);
+                db.SaveChanges();
+                
             }
             catch(Exception feil) {
                 return false;

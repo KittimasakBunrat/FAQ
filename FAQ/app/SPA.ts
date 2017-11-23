@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from "@angular/core";
+﻿import { Component, OnInit, Pipe, PipeTransform } from "@angular/core";
 import { Http, Response } from '@angular/http';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import "rxjs/add/operator/map";
@@ -17,6 +17,7 @@ export class SPA {
     visInnsendtListe: boolean;
     alleKunder: Array<FAQ>;
     alleInnsendt: Array<INNSENDT>;
+
     skjema: FormGroup;
     laster: boolean;
 
@@ -27,6 +28,8 @@ export class SPA {
             sendtsporsmal: [null, Validators.compose([Validators.required, Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])],
         });
     }
+
+    
 
     ngOnInit() {
         this.laster = true;
@@ -133,4 +136,10 @@ export class SPA {
             );
     };
 
+ 
+
 }
+
+
+    
+

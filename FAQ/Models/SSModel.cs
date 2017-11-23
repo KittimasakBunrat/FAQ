@@ -10,7 +10,7 @@ namespace FAQ.Models
     {
         [Key]
         public int id { get; set; }
-        public string kategori { get; set; }
+        public int kategori { get; set; }
         public string sporsmal { get; set; }
         public string svar { get; set; }
     }

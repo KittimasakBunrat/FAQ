@@ -19,10 +19,18 @@
         </table>
         <button class='btn btn-primary' (click)='registrerInnsendt()'>Register sporsmal</button>
         <button class='btn btn-primary' (click)='visInnsendt()'>Innsendt sporsmal</button>
+        <div *ngFor="let item of alleKunder | grupper:'kategori' ">
+            Kategori {{ item.key }} har
+            <div *ngFor="let value of item.value">
+                {{value.sporsmal}} {{value.svar}}
+            </div>
+            <br>
+        </div>
     </div>
 </div>
 
 <div class="col-md-6 col-md-offset-1" *ngIf="visInnsendtListe">
+        
     <table class="table table-bordered table-condensed">
         <thead>
             <tr>
@@ -37,6 +45,7 @@
             </tr>
         </tbody>
     </table>
+        
     <button class="btn btn-default" (click)="tilbakeTilListe()">Tilbake</button>
 </div>
 
@@ -47,7 +56,7 @@
             <label>Email</label>
             <input class="form-control" formControlName="email" />
             <p class="alert alert-warning" [hidden]="skjema.controls.email.valid || (skjema.controls.email.pristine && !submitted)">
-               Email er obligatorisk.
+                Email er obligatorisk.
             </p>
         </div>
         <div class="form-group">
@@ -58,9 +67,8 @@
             </p>
         </div>
         <div class="form-group">
-            <button type="submit" *ngIf="skjemaStatus=='Registrere'" [disabled]="!skjema.valid"  class="btn btn-primary">Registrer</button>
+            <button type="submit" *ngIf="skjemaStatus=='Registrere'" [disabled]="!skjema.valid" class="btn btn-primary">Registrer</button>
             <button class="btn btn-default" (click)="tilbakeTilListe()">Tilbake</button>
         </div>
     </form>
 </div>
-

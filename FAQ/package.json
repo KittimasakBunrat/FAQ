@@ -16,6 +16,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@angular/cli": "^1.5.3",
     "@angular/common": "4.3.4",
     "@angular/compiler": "4.3.4",
     "@angular/core": "4.3.4",
@@ -24,18 +25,18 @@
     "@angular/platform-browser": "4.3.4",
     "@angular/platform-browser-dynamic": "4.3.4",
     "@angular/router": "4.3.4",
-
+    "angular-cli": "^1.0.0-beta.28.3",
+    "angular-filter": "^0.5.17",
     "angular-in-memory-web-api": "~0.2.4",
-    "systemjs": "0.19.40",
     "core-js": "^2.4.1",
     "rxjs": "5.0.1",
+    "systemjs": "0.19.40",
     "zone.js": "^0.7.4"
   },
   "devDependencies": {
     "concurrently": "^3.2.0",
     "lite-server": "^2.2.2",
     "typescript": "~2.0.10",
-
     "canonical-path": "0.0.2",
     "tslint": "^3.15.1",
     "lodash": "^4.16.4",
@@ -47,10 +48,8 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~4.0.14",
     "rimraf": "^2.5.4",
-
     "@types/node": "^6.0.46",
     "@types/jasmine": "2.5.36"
   },
   "repository": {}
-} 
-
+}

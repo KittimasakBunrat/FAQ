@@ -1,6 +1,7 @@
 ﻿export class FAQ {
     id: number;
-    kategori: number;
+    kategoriid: number;
+    kategori: string;
     sporsmal: string;
     svar: string;    
 }

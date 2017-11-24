@@ -31,7 +31,8 @@ namespace FAQ.Models
             var sporsmal = new SSModel()
             {
                 id = 1,
-                kategori = 1,
+                kategoriid = 1,
+                kategori = "En",
                 sporsmal = "Q1",
                 svar = "A1"
                 
@@ -40,7 +41,8 @@ namespace FAQ.Models
             var sporsmal1 = new SSModel()
             {
                 id = 1,
-                kategori = 1,
+                kategoriid = 1,
+                kategori = "En",
                 sporsmal = "Q2",
                 svar = "A2"
 
@@ -49,7 +51,8 @@ namespace FAQ.Models
             var sporsmal2 = new SSModel()
             {
                 id = 1,
-                kategori = 3,
+                kategoriid = 3,
+                kategori = "Tre",
                 sporsmal = "Q3",
                 svar = "A3"
 

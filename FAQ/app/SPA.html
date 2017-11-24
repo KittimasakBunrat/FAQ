@@ -1,31 +1,21 @@
 ﻿<div>
     <div class="col-md-6 col-md-offset-1" *ngIf="visKundeListe">
         <div *ngIf="laster">Laster spørsmål og svar.....</div>
-        <table class="table table-bordered table-condensed">
-            <thead>
-                <tr>
-                    <th>Kategori</th>
-                    <th>Spørsmål</th>
-                    <th>Svar</th>
-                </tr>
-            </thead>
-            <tbody *ngFor="let faq of alleKunder">
-                <tr>
-                    <td>{{faq.kategori}}</td>
-                    <td>{{faq.sporsmal}}</td>
-                    <td>{{faq.svar}}</td>
-                </tr>
-            </tbody>
-        </table>
+        <div *ngFor="let item of alleKunder | grupper:'kategoriid'; let j=index">
+            <div *ngFor="let value of item.value; let i=index">
+                <div *ngIf="i<1">
+                    <h2 data-toggle="collapse" [attr.data-target]="'#col' + j">Kategori {{value.kategori}} har:</h2>
+                    <div class="collapse" [attr.id]="'col' + j">
+                        <div *ngFor="let value of item.value">
+                            <p data-toggle="collapse" [attr.data-target]="'#qa' + j">{{value.sporsmal}}</p>
+                            <p class="collapse" [attr.id]="'qa' + j">{{value.svar}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <button class='btn btn-primary' (click)='registrerInnsendt()'>Register sporsmal</button>
         <button class='btn btn-primary' (click)='visInnsendt()'>Innsendt sporsmal</button>
-        <div *ngFor="let item of alleKunder | grupper:'kategori' ">
-            Kategori {{ item.key }} har
-            <div *ngFor="let value of item.value">
-                {{value.sporsmal}} {{value.svar}}
-            </div>
-            <br>
-        </div>
     </div>
 </div>
 
@@ -72,3 +62,4 @@
         </div>
     </form>
 </div>
+

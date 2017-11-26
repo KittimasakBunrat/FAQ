@@ -5,17 +5,20 @@ import "rxjs/add/operator/map";
 import { FAQ } from "./FAQ";
 import { INNSENDT } from "./innsendt";
 import { Headers } from "@angular/http";
+import { Search } from "./search";
 
 @Component({
     selector: "min-app",
-    templateUrl: "./app/SPA.html"
+    templateUrl: "./app/SPA.html"    
 })
 export class SPA {
     visSkjema: boolean;
     skjemaStatus: string;
-    visKundeListe: boolean;
+    visFAQListe: boolean;
     visInnsendtListe: boolean;
-    alleKunder: Array<FAQ>;
+    isDesc: boolean = false;
+    column: string = 'CategoryName';
+    alleFAQ: Array<FAQ>;
     alleInnsendt: Array<INNSENDT>;
 
     skjema: FormGroup;
@@ -25,7 +28,7 @@ export class SPA {
         this.skjema = fb.group({
             id: [""],
             email: [null, Validators.compose([Validators.required, Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)])],
-            sendtsporsmal: [null, Validators.compose([Validators.required, Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])],
+            sendtsporsmal: [null, null ],
         });
     }
 
@@ -35,7 +38,7 @@ export class SPA {
         this.laster = true;
         this.hentAlleKunder();
         this.visSkjema = false;
-        this.visKundeListe = true;
+        this.visFAQListe = true;
         this.visInnsendtListe = false;
         
     }
@@ -48,10 +51,10 @@ export class SPA {
             })
             .subscribe(
             JsonData => {
-                this.alleKunder = [];
+                this.alleFAQ = [];
                 if (JsonData) {
                     for (let kundeObjekt of JsonData) {
-                        this.alleKunder.push(kundeObjekt);
+                        this.alleFAQ.push(kundeObjekt);
                         this.laster = false;
                     }
                 };
@@ -89,20 +92,22 @@ export class SPA {
             sendtsporsmal: "",
         });
         this.skjema.markAsPristine();
-        this.visKundeListe = false;
+        this.visFAQListe = false;
         this.skjemaStatus = "Registrere";
         this.visSkjema = true;
+        this.visInnsendtListe = false;
     }
 
     tilbakeTilListe() {
-        this.visKundeListe = true;
+        this.visFAQListe = true;
         this.visSkjema = false;
         this.visInnsendtListe = false;
     }
 
     visInnsendt() {
         this.hentAlleInnsendt();
-        this.visKundeListe = false;
+        this.visSkjema = false;
+        this.visFAQListe = false;
         this.visInnsendtListe = true;
     }
 
@@ -129,11 +134,29 @@ export class SPA {
             .subscribe(
             retur => {
                 this.visSkjema = false;
-                this.visKundeListe = true;
+                this.visFAQListe = true;
             },
             error => alert(error),
             () => console.log("ferdig post-api/is")
             );
+    };
+
+    sort(property: any) {
+        this.isDesc = !this.isDesc; //change the direction    
+        this.column = property;
+        let direction = this.isDesc ? 1 : -1;
+
+        this.alleInnsendt.sort(function (a, b) {
+            if (a[property] < b[property]) {
+                return -1 * direction;
+            }
+            else if (a[property] > b[property]) {
+                return 1 * direction;
+            }
+            else {
+                return 0;
+            }
+        });
     };
 
  

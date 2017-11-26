@@ -18,17 +18,19 @@ var SPA = (function () {
     function SPA(_http, fb) {
         this._http = _http;
         this.fb = fb;
+        this.isDesc = false;
+        this.column = 'CategoryName';
         this.skjema = fb.group({
             id: [""],
             email: [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)])],
-            sendtsporsmal: [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])],
+            sendtsporsmal: [null, null],
         });
     }
     SPA.prototype.ngOnInit = function () {
         this.laster = true;
         this.hentAlleKunder();
         this.visSkjema = false;
-        this.visKundeListe = true;
+        this.visFAQListe = true;
         this.visInnsendtListe = false;
     };
     SPA.prototype.hentAlleKunder = function () {
@@ -39,11 +41,11 @@ var SPA = (function () {
             return JsonData;
         })
             .subscribe(function (JsonData) {
-            _this.alleKunder = [];
+            _this.alleFAQ = [];
             if (JsonData) {
                 for (var _i = 0, JsonData_1 = JsonData; _i < JsonData_1.length; _i++) {
                     var kundeObjekt = JsonData_1[_i];
-                    _this.alleKunder.push(kundeObjekt);
+                    _this.alleFAQ.push(kundeObjekt);
                     _this.laster = false;
                 }
             }
@@ -77,18 +79,20 @@ var SPA = (function () {
             sendtsporsmal: "",
         });
         this.skjema.markAsPristine();
-        this.visKundeListe = false;
+        this.visFAQListe = false;
         this.skjemaStatus = "Registrere";
         this.visSkjema = true;
+        this.visInnsendtListe = false;
     };
     SPA.prototype.tilbakeTilListe = function () {
-        this.visKundeListe = true;
+        this.visFAQListe = true;
         this.visSkjema = false;
         this.visInnsendtListe = false;
     };
     SPA.prototype.visInnsendt = function () {
         this.hentAlleInnsendt();
-        this.visKundeListe = false;
+        this.visSkjema = false;
+        this.visFAQListe = false;
         this.visInnsendtListe = true;
     };
     SPA.prototype.vedSubmit = function () {
@@ -110,8 +114,25 @@ var SPA = (function () {
             .map(function (returData) { return returData.toString(); })
             .subscribe(function (retur) {
             _this.visSkjema = false;
-            _this.visKundeListe = true;
+            _this.visFAQListe = true;
         }, function (error) { return alert(error); }, function () { return console.log("ferdig post-api/is"); });
+    };
+    ;
+    SPA.prototype.sort = function (property) {
+        this.isDesc = !this.isDesc; //change the direction    
+        this.column = property;
+        var direction = this.isDesc ? 1 : -1;
+        this.alleInnsendt.sort(function (a, b) {
+            if (a[property] < b[property]) {
+                return -1 * direction;
+            }
+            else if (a[property] > b[property]) {
+                return 1 * direction;
+            }
+            else {
+                return 0;
+            }
+        });
     };
     ;
     return SPA;

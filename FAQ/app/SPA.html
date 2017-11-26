@@ -1,65 +1,100 @@
-﻿<div>
-    <div class="col-md-6 col-md-offset-1" *ngIf="visKundeListe">
-        <div *ngIf="laster">Laster spørsmål og svar.....</div>
-        <div *ngFor="let item of alleKunder | grupper:'kategoriid'; let j=index">
-            <div *ngFor="let value of item.value; let i=index">
-                <div *ngIf="i<1">
-                    <h2 data-toggle="collapse" [attr.data-target]="'#col' + j">Kategori {{value.kategori}} har:</h2>
-                    <div class="collapse" [attr.id]="'col' + j">
-                        <div *ngFor="let value of item.value">
-                            <p data-toggle="collapse" [attr.data-target]="'#qa' + j">{{value.sporsmal}}</p>
-                            <p class="collapse" [attr.id]="'qa' + j">{{value.svar}}</p>
+﻿<nav class="navbar navbar-inverse navbar-static-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <p class="whitecolor big margtop">FAQ</p>
+        </div>
+            <div class="container">
+                <button class="btn btn-primary-outline whitecolor" (click)="tilbakeTilListe()">Ofte stilte spørsmål</button>
+                <button class="btn btn-primary-outline whitecolor" (click)='registrerInnsendt()'>Register sporsmal</button>
+                <button class="btn btn-primary-outline whitecolor" (click)='visInnsendt()'>Innsendt sporsmal</button>
+            </div>
+    </div>
+</nav>
+
+    <div>
+        <div class="col-md-6 col-md-offset-1" *ngIf="visFAQListe">
+            <div class="form-group">
+                <input type="text" [(ngModel)]="searchText" class="form-control" placeholder="Søk spørsmål" />
+            </div>
+            <div class="whitecolor" *ngIf="laster">Laster.....</div>
+            <div *ngFor="let item of alleFAQ | grupper:'kategoriid'; let j=index">
+                <div *ngFor="let value of item.value; let i=index">
+                    <div *ngIf="i<1">
+                        <div *ngIf="searchText.length < 1" id="accordion" role="tablist">
+                            <div class="card">
+                                <div class="card-body" data-toggle="collapse" [attr.data-target]="'#col' + j">
+                                    <h4><b>{{value.kategori}} </b></h4>
+                                    <div class="collapse" [attr.id]="'col' + j">
+                                        <div *ngFor="let value of item.value | search: searchText; let k=index">
+                                            <br />
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <p>{{value.sporsmal}}</p>
+                                                </div>
+                                                <div class="card-body">
+                                                    <p>{{value.svar}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div *ngFor="let faq of alleFAQ | search: searchText; let k=index">
+                <br />
+                <div *ngIf="searchText.length > 0" class="card">
+                    <div class="card-header">
+                        <p>{{faq.sporsmal}}</p>
+                    </div>
+                    <div class="card-body">
+                        <p>{{faq.svar}}</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <button class='btn btn-primary' (click)='registrerInnsendt()'>Register sporsmal</button>
-        <button class='btn btn-primary' (click)='visInnsendt()'>Innsendt sporsmal</button>
     </div>
-</div>
 
-<div class="col-md-6 col-md-offset-1" *ngIf="visInnsendtListe">
-        
-    <table class="table table-bordered table-condensed">
-        <thead>
-            <tr>
-                <th>Email</th>
-                <th>Sporsmal</th>
-            </tr>
-        </thead>
-        <tbody *ngFor="let is of alleInnsendt">
-            <tr>
-                <td>{{is.email}}</td>
-                <td>{{is.sendtsporsmal}}</td>
-            </tr>
-        </tbody>
-    </table>
-        
-    <button class="btn btn-default" (click)="tilbakeTilListe()">Tilbake</button>
-</div>
+    <div class="col-md-6 col-md-offset-1" *ngIf="visInnsendtListe">
 
-<div class="col-sm-4 col-sm-offset-2" *ngIf="visSkjema">
-    <form [formGroup]="skjema" (ngSubmit)="vedSubmit()">
-        <input class="form-control" formControlName="id" type="hidden" />
-        <div class="form-group">
-            <label>Email</label>
-            <input class="form-control" formControlName="email" />
-            <p class="alert alert-warning" [hidden]="skjema.controls.email.valid || (skjema.controls.email.pristine && !submitted)">
-                Email er obligatorisk.
-            </p>
-        </div>
-        <div class="form-group">
-            <label>Sporsmal</label>
-            <input class="form-control" formControlName="sendtsporsmal" />
-            <p class="alert alert-warning" [hidden]="skjema.controls.sendtsporsmal.valid || (skjema.controls.sendtsporsmal.pristine && !submitted)">
-                Sporsmal er obligatorisk.
-            </p>
-        </div>
-        <div class="form-group">
-            <button type="submit" *ngIf="skjemaStatus=='Registrere'" [disabled]="!skjema.valid" class="btn btn-primary">Registrer</button>
-            <button class="btn btn-default" (click)="tilbakeTilListe()">Tilbake</button>
-        </div>
-    </form>
-</div>
+        <table class="table table-bordered table-condensed">
+            <thead>
+                <tr class="whitebackground">
+                    <th> <i class="fa fa-sort pointer" aria-hidden="true" (click)="sort('email')"></i>Email</th>
+                    <th> <i class="fa fa-sort pointer" aria-hidden="true" (click)="sort('sendtsporsmal')"></i>Spørsmål</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let is of alleInnsendt">
+                <tr class="whitebackground">
+                    <td>{{is.email}}</td>
+                    <td>{{is.sendtsporsmal}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-sm-4 col-sm-offset-2" *ngIf="visSkjema">
+        <form [formGroup]="skjema" (ngSubmit)="vedSubmit()">
+            <input class="form-control" formControlName="id" type="hidden" />
+            <div class="form-group">
+                <label class="whitecolor">Email</label>
+                <input class="form-control" formControlName="email" />
+                <p class="alert alert-warning" [hidden]="skjema.controls.email.valid || (skjema.controls.email.pristine && !submitted)">
+                    Email er obligatorisk.
+                </p>
+            </div>
+            <div class="form-group">
+                <label class="whitecolor">Sporsmal</label>
+                <textarea rows="4" cols="50" class="form-control" formControlName="sendtsporsmal"></textarea>
+                <p class="alert alert-warning" [hidden]="skjema.controls.sendtsporsmal.valid || (skjema.controls.sendtsporsmal.pristine && !submitted)">
+                    Sporsmal er obligatorisk.
+                </p>
+            </div>
+            <div class="form-group">
+                <button type="submit" *ngIf="skjemaStatus=='Registrere'" [disabled]="!skjema.valid" class="btn btn-primary">Registrer</button>
+            </div>
+        </form>
+    </div>
 

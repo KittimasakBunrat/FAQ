@@ -11,6 +11,7 @@ var forms_1 = require("@angular/forms");
 var http_1 = require("@angular/http");
 var SPA_1 = require("./SPA");
 var grupper_1 = require("./grupper");
+var search_1 = require("./search");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -18,8 +19,8 @@ var AppModule = (function () {
 }());
 AppModule = __decorate([
     core_1.NgModule({
-        imports: [platform_browser_1.BrowserModule, platform_browser_1.BrowserModule, forms_1.ReactiveFormsModule, http_1.HttpModule, http_1.JsonpModule],
-        declarations: [SPA_1.SPA, grupper_1.Grupper],
+        imports: [platform_browser_1.BrowserModule, platform_browser_1.BrowserModule, forms_1.ReactiveFormsModule, forms_1.FormsModule, http_1.HttpModule, http_1.JsonpModule],
+        declarations: [SPA_1.SPA, grupper_1.Grupper, search_1.Search],
         bootstrap: [SPA_1.SPA]
     })
 ], AppModule);

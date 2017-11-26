@@ -1,18 +1,28 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿html {
+    background-image: url(grey.jpg);
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+.whitecolor {
+    color: white;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+.big {
+    font-size: xx-large;
 }
 
+.margtop
+{
+    margin-top:10px;
+}
+
+.btn-primary-outline {
+    background-color: transparent;
+}
+
+.whitebackground {
+    background-color:white;
+}
+
+.pointer {
+    cursor: pointer;
+}
